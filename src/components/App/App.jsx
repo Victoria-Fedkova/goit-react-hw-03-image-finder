@@ -1,14 +1,15 @@
 import { Component } from 'react';
 import axios from 'axios';
 
-import Searchbar from './Searchbar';
-import ImageGallery from './ImageGallery';
-import Button from './Button';
-import Loader from './Loader/';
-import Modal from './Modal/Modal';
+import Searchbar from '../Searchbar';
+import ImageGallery from '../ImageGallery';
+import Button from '../Button';
+import Loader from '../Loader';
+import Modal from '../Modal/Modal';
 import Notiflix from 'notiflix';
+import { Placeholder } from './Placeholder.styled';
 Notiflix.Notify.init({
-  position: 'right-top',
+  position: 'right-bottom',
 });
 
 const PER_PAGE = 12;
@@ -70,7 +71,7 @@ export default class App extends Component {
     });
 
     if (response.data.totalHits === 0) {
-      Notiflix.Notify.warning('Sorry, there are no images to show.');
+      Notiflix.Notify.info('Sorry, there are no images to show.');
     }
     this.setState(prevState => ({
       images: [...prevState.images, ...response.data.hits],
@@ -122,7 +123,7 @@ export default class App extends Component {
         <Searchbar onSearch={this.handleSubmit} />
         {isLoading && <Loader />}
         {totalHits === 0 && query !== '' && !isLoading ? (
-          <div>Заглушка</div>
+          <Placeholder>Заглушка</Placeholder>
         ) : (
           <ImageGallery images={images} onImgClick={this.selectPicture} />
         )}
