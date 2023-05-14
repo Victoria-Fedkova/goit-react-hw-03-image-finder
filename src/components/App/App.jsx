@@ -123,7 +123,7 @@ export default class App extends Component {
         <Searchbar onSearch={this.handleSubmit} />
         {isLoading && <Loader />}
         {totalHits === 0 && query !== '' && !isLoading ? (
-          <Placeholder>Заглушка</Placeholder>
+          <Placeholder><span>Oops... We can't find what you want 😔</span></Placeholder>
         ) : (
           <ImageGallery images={images} onImgClick={this.selectPicture} />
         )}
