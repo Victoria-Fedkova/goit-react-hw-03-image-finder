@@ -42,7 +42,7 @@ export default class App extends Component {
     }
   }
   componentWillUnmount() {
-    window.addEventListener('keydown', this.handleModalClose);
+    window.removeEventListener('keydown', this.handleModalClose);
   }
 
   handleModalClose = e => {
