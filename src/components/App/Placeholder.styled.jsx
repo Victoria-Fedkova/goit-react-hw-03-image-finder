@@ -9,4 +9,5 @@ export const Placeholder = styled.div`
   background-image: url(${img});
   background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
 `;

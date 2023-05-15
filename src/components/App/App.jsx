@@ -31,18 +31,6 @@ export default class App extends Component {
     ) {
       this.getPictures();
     }
-
-    if (this.state.selectedImageId && prevState.selectedImageId === null) {
-      window.addEventListener('keydown', this.handleModalClose);
-    } else if (
-      prevState.selectedImageId &&
-      this.state.selectedImageId === null
-    ) {
-      window.addEventListener('keydown', this.handleModalClose);
-    }
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleModalClose);
   }
 
   handleModalClose = e => {
@@ -57,9 +45,7 @@ export default class App extends Component {
     const params = {
       key: '34244000-42c3edd46967142fbd554b6c5',
       q: this.state.query,
-      image_type: 'photo',
       orientation: 'horizontal',
-      safesearch: true,
       page: this.state.page,
       per_page: PER_PAGE,
     };
@@ -122,9 +108,12 @@ export default class App extends Component {
       <div>
         <Searchbar onSearch={this.handleSubmit} />
         {isLoading && <Loader />}
-        {totalHits === 0 && query !== '' && !isLoading ? (
-          <Placeholder><span>Oops... We can't find what you want 😔</span></Placeholder>
-        ) : (
+        {totalHits === 0 && query !== '' && !isLoading && (
+          <Placeholder>
+            <span>Oops... We can't find what you want 😔</span>
+          </Placeholder>
+        )}
+        {totalHits !== 0 && (
           <ImageGallery images={images} onImgClick={this.selectPicture} />
         )}
         {totalPages > page && !isLoading && (
@@ -134,7 +123,7 @@ export default class App extends Component {
           <Modal
             src={largeImageURL}
             alt={tags}
-            onBackdropClick={this.handleModalClose}
+            handleModalClose={this.handleModalClose}
           />
         )}
       </div>
